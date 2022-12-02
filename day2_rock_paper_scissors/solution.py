@@ -25,6 +25,9 @@ pts = {"Rock": 1, "Paper": 2, "Scissors": 3}
 def total_score(
     scores: List[List[str]], methods: Dict[str, str], scoring: Dict[str, int]
 ) -> int:
+    """
+    Track points for self and opponent in tic tac toe. Returns my score.
+    """
     opp_pts = 0
     my_pts = 0
 
@@ -32,9 +35,10 @@ def total_score(
     tie = 3
 
     for game in scores:
-        opp = game[0]
-        me = game[1]
+        # create choices for opponent and self
+        opp, me = game
 
+        # cast dict results as string for later usage
         opp_choice = cast(str, methods.get(opp))
         my_choice = cast(str, methods.get(me))
 
