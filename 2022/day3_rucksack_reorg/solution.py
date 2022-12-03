@@ -10,20 +10,16 @@ path_ = str(pathlib.Path().absolute())
 data = open(path_ + folder_filename).read().splitlines()
 
 
+# function to split up values
 def splitter(text: str) -> Tuple[str, str]:
     mid = len(text) // 2
 
     return text[0:mid], text[mid:]
 
 
+# function to change chars into numerical values
 def convert(val: str) -> List[int]:
     return [ord(chr) - 96 if chr.islower() else ord(chr) - 38 for chr in val]
-
-
-def dupe_finder(list1: List[int], list2: List[int]) -> int:
-    set1, set2 = set(list1), set(list2)
-    output = set1.intersection(set2)
-    return list(output)[0]
 
 
 if __name__ == "__main__":
@@ -31,5 +27,20 @@ if __name__ == "__main__":
     for string in data:
         txt1, txt2 = splitter(string)
         nums1, nums2 = convert(txt1), convert(txt2)
-        total += int(dupe_finder(nums1, nums2))
+        # find diff between two lists of unique numbers
+        total += list(set(nums1) & set(nums2))[0]
     print(f"Part 1: {total}")
+
+    total2 = 0
+    for num in range(0, len(data) - 1, 3):
+        # loop through groups of 3 strings
+        right = num + 3
+        chunk = data[num:right]
+        nums1, nums2, nums3 = (
+            convert(chunk[0]),
+            convert(chunk[1]),
+            convert(chunk[2]),
+        )
+        #  find diff between three lists of unique numbers
+        total2 += list(set(nums1) & set(nums2) & set(nums3))[0]
+    print(f"Part 2: {total2}")
