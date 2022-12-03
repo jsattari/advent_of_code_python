@@ -5,7 +5,7 @@ import pathlib
 from typing import List
 
 # load input data from file
-folder_filename = "/day1_calorie_counting/input.txt"
+folder_filename = "/2022/day1_calorie_counting/input.txt"
 data = open(str(pathlib.Path().absolute()) + folder_filename).read()
 
 # split into list of ints
@@ -41,5 +41,5 @@ def top_three(kcals: List[List[int]]) -> int:
 
 
 if __name__ == "__main__":
-    print(max_cals(calories))
-    print(top_three(calories))
+    print(f"Part 1: {max_cals(calories)}")
+    print(f"Part 2: {top_three(calories)}")
