@@ -11,14 +11,22 @@ data = open(path_ + folder_filename).read().splitlines()
 
 
 def splitter(text: str) -> Tuple[str, str]:
-    mid = (len(text) - 1) // 2
+    mid = len(text) // 2
 
-    return text[0:mid], text[mid:-1]
+    return text[0:mid], text[mid:]
 
 
 def convert(val: str) -> List[int]:
-    return [ord(chr) - 97 if chr.islower() else ord(chr) - 38 for chr in val]
+    return [ord(chr) - 96 if chr.islower() else ord(chr) - 38 for chr in val]
+
+
+def dupe_finder(list1: List[int], list2: List[int]) -> int:
+    set1, set2 = set(list1), set(list2)
+    output = set1.intersection(set2)
+    return list(output)[0]
 
 
 if __name__ == "__main__":
-    print(convert("ChEEse"))
+    txt1, txt2 = splitter("PmmdzqPrVvPwwTWBwg")
+    nums1, nums2 = convert(txt1), convert(txt2)
+    print(dupe_finder(nums1, nums2))
