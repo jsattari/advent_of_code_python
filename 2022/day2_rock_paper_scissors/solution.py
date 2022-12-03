@@ -2,87 +2,31 @@
 # -*- coding:utf-8 -*-
 
 import pathlib
-from typing import List, Dict, cast
-
 
 # load input data from file
-folder_filename = "/day2_rock_paper_scissors/input.txt"
-data = open(str(pathlib.Path().absolute()) + folder_filename).read()
+folder_filename = "/2022/day2_rock_paper_scissors/input.txt"
+path_ = str(pathlib.Path().absolute())
+data = open(path_ + folder_filename).read().splitlines()
 
-rounds = [pair.split(" ") for pair in data.split("\n")]
+# split data into List[List[str, str]]
+lines = [line.split() for line in data]
 
-choices = {
-    "A": "Rock",
-    "B": "Paper",
-    "C": "Scissors",
-    "X": "Rock",
-    "Y": "Paper",
-    "Z": "Scissors",
-}
+# get numerical difference from "Rock" value for opp and self
+games = [(ord(x) - ord("A"), ord(y) - ord("X")) for x, y in lines]
 
-pts = {"Rock": 1, "Paper": 2, "Scissors": 3}
+# find numerical difference based on part 2 scoring logic
+choices = [(x, (x + y - 1) % 3) for x, y in games]
 
 
-def total_score(
-    scores: List[List[str]], methods: Dict[str, str], scoring: Dict[str, int]
-) -> int:
-    """
-    Track points for self and opponent in tic tac toe. Returns my score.
-    """
-    opp_pts = 0
-    my_pts = 0
-
-    win = 6
-    tie = 3
-
-    for game in scores:
-        # create choices for opponent and self
-        opp, me = game
-
-        # cast dict results as string for later usage
-        opp_choice = cast(str, methods.get(opp))
-        my_choice = cast(str, methods.get(me))
-
-        # points for round
-        my_total = cast(int, scoring.get(my_choice))
-        opp_total = cast(int, scoring.get(opp_choice))
-
-        if opp_choice == my_choice:
-            my_pts += my_total + tie
-            opp_pts += opp_total + tie
-
-        elif my_choice == "Rock":
-            if opp_choice == "Scissors":
-                my_pts += my_total + win
-                opp_pts += opp_total
-
-            else:
-                my_pts += my_total
-                opp_pts += opp_total + win
-
-        elif my_choice == "Paper":
-            if opp_choice == "Rock":
-                my_pts += my_total + win
-                opp_pts += opp_total
-
-            else:
-                my_pts += my_total
-                opp_pts += opp_total + win
-
-        elif my_choice == "Scissors":
-            if opp_choice == "Paper":
-                my_pts += my_total + win
-                opp_pts += opp_total
-
-            else:
-                my_pts += my_total
-                opp_pts += opp_total + win
-        else:
-            my_pts += 0
-            opp_pts += 0
-
-    return my_pts
+# function that returns score based on numerical inputs
+def score(val1: int, val2: int) -> int:
+    if (val1 - 1) % 3 == val2:
+        return val2 + 1
+    elif (val2 - 1) % 3 == val1:
+        return val2 + 7
+    return val2 + 4
 
 
 if __name__ == "__main__":
-    print(total_score(rounds, choices, pts))
+    print(f"Part 1: {sum(score(x, y) for x, y in games)}")
+    print(f"Part 2: {sum(score(x, y) for x, y in choices)}")
