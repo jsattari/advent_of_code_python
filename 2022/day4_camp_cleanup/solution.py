@@ -3,7 +3,6 @@
 
 import pathlib
 from typing import List, Any
-import __builtin__
 
 # load input data from file
 folder_filename = "/2022/day4_camp_cleanup/input.txt"
@@ -14,7 +13,7 @@ data = open(path_ + folder_filename).read().splitlines()
 # funciton to split strings into list of integers for comparison
 def split_and_flatten(val: Any) -> List[int]:
     nums: List[List[Any]] = [item.split("-") for item in val.split(",")]
-    flat: List[int] = [__builtin__.int(ele) for ele in nums for ele in ele]
+    flat: List[int] = [int(x) for x in nums for x in x]  # type: ignore
     return flat
 
 
