@@ -2,7 +2,8 @@
 # -*- coding:utf-8 -*-
 
 import pathlib
-from typing import Tuple, List
+from typing import List, Any
+import __builtin__
 
 # load input data from file
 folder_filename = "/2022/day4_camp_cleanup/input.txt"
@@ -10,13 +11,28 @@ path_ = str(pathlib.Path().absolute())
 data = open(path_ + folder_filename).read().splitlines()
 
 
-def contain_check(list1: List[int], list2: List[int]) -> Tuple[bool, bool]:
-    output1 = all(ele in list2 for ele in list1)
-    output2 = all(ele in list1 for ele in list2)
-    return output1, output2
+# funciton to split strings into list of integers for comparison
+def split_and_flatten(val: Any) -> List[int]:
+    nums: List[List[Any]] = [item.split("-") for item in val.split(",")]
+    flat: List[int] = [__builtin__.int(ele) for ele in nums for ele in ele]
+    return flat
 
 
 if __name__ == "__main__":
     total = 0
-    for row in data[:5]:
-        ele = row.split(",")
+    for row in data:
+        a, b, c, d = split_and_flatten(row)
+        # check if start/end points are lesser
+        # than their counterparts
+        if a <= c <= d <= b or c <= a <= b <= d:
+            total += 1
+    print(f"Part 1: {total}")
+
+    total2 = 0
+    for row in data:
+        a, b, c, d = split_and_flatten(row)
+        # check if the higher start point is less than
+        # the lower end point to find overlaps
+        if max(a, c) <= min(b, d):
+            total2 += 1
+    print(f"Part 2: {total2}")
