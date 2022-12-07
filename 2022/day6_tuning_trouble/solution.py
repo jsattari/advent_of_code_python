@@ -9,20 +9,23 @@ path_ = str(pathlib.Path().absolute())
 data = open(path_ + folder_filename).read()
 
 
-def find_first_marker(txt: str) -> int:
+def find_msg_marker(txt: str, char_len: int) -> int:
+    # create bounds for window
     left = 0
-    right = left + 4
-    word = list(txt[left:right])
-    chars = set(txt[left:right])
+    right = left + char_len
 
-    while len(word) != len(chars):
+    """
+    If length of unique chars in window
+    is not equal to desired char_len, keep
+    incrementing window until matching
+    """
+    while char_len != len(set(txt[left:right])):
         left += 1
         right += 1
-        word = list(txt[left:right])
-        chars = set(txt[left:right])
 
     return right
 
 
 if __name__ == "__main__":
-    print(find_first_marker(data))
+    print(f"Part 1: {find_msg_marker(data, 4)}")
+    print(f"Part 2: {find_msg_marker(data, 14)}")
