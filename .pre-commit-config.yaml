@@ -15,11 +15,3 @@ repos:
     rev: 4c8a8c7
     hooks:
       - id: mypy
-  - repo: local
-    hooks:
-      - id: custom-mypy-ignore
-        name: "Ignore mypy error for src directory"
-        entry: "mypy"
-        language: system
-        types: [python]
-        exclude: ^src/
