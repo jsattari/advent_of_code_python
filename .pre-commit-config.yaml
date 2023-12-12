@@ -18,8 +18,8 @@ repos:
   - repo: local
     hooks:
       - id: custom-mypy-ignore
-        name: "Ignore mypy error for 2022 directory"
+        name: "Ignore mypy error for src directory"
         entry: "mypy"
         language: system
         types: [python]
-        exclude: ^src/
+        exclude: src/*
