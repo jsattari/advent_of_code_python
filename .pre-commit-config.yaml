@@ -22,4 +22,4 @@ repos:
         entry: "mypy"
         language: system
         types: [python]
-        exclude: src/*
+        exclude: ^src/
