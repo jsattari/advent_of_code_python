@@ -11,6 +11,7 @@ repos:
     rev: 51f076398e617996de201321122034aa6f33f68e
     hooks:
       - id: flake8
+        args: ["--ignore=E402"]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: 4c8a8c7
     hooks:
