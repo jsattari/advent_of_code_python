@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
+import inspect
 from pathlib import Path
 from typing import Union
 
 
-def file_finder(filename: str, start_path=".") -> Union[Path, None, Exception]:
+def file_finder() -> Union[Path, None, Exception]:
     """
         find input file within folder
     """
 
-    # starting point
-    begin = Path(start_path)
+    # find frame of caller
+    frame = inspect.stack()[1]
 
-    # file path
-    file_path = begin / filename
+    # find get filename from frame
+    filename = frame[1]
 
-    try:
-        if file_path.is_file():
-            return file_path
+    # get absolute path
+    filepath = Path(filename).resolve()
 
-    except Exception as e:
-        return e
+    # create path of input.txt
+    input_file_path = filepath.parent / "input.txt"
 
-    return None
+    if input_file_path.is_file():
+        return input_file_path
+    else:
+        raise FileNotFoundError("input.txt file not found")
