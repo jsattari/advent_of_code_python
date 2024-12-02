@@ -3,7 +3,8 @@
 # ruff: noqa: E402
 # mypy: disable-error-code="union-attr"
 
-from typing import List
+from collections import defaultdict
+from typing import Dict, List
 from pathlib import Path
 
 import sys
@@ -48,6 +49,28 @@ def part_one(dataset: str) -> int:
     return output
 
 
+def part_two(dataset: str) -> int:
+    nums: List[int] = []
+    num_dict: Dict[str, int] = defaultdict(int)
+
+    for line in dataset.split("\n"):
+        left, right = line.split()
+
+        # increment value from right side in dict
+        num_dict[right] += 1
+
+        # add left side to list of nums
+        nums.append(int(left))
+
+    output = 0
+
+    # loop over num list, find count from num dict then multiply
+    for num in nums:
+        output += num * num_dict[str(num)]
+
+    return output
+
+
 if __name__ == "__main__":
     # current file path
     curr_file = Path(__file__)
@@ -57,3 +80,5 @@ if __name__ == "__main__":
         data = file.read()
 
     print(f"Part one: {part_one(data)}")
+
+    print(f"Part two: {part_two(data)}")
