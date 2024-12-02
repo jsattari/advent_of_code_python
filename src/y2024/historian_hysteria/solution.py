@@ -14,8 +14,11 @@ sys.path.append(str(curr_path))
 from utility.helpers import file_finder
 
 if __name__ == "__main__":
+    # current file path
+    curr_file = Path(__file__)
+
     # open test data file
-    with file_finder(Path(__file__)).open("r") as file:
+    with file_finder(curr_file).open("r") as file:
         data = file.read()
 
     print(data)
