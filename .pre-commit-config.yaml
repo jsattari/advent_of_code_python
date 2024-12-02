@@ -7,12 +7,16 @@ repos:
       - id: trailing-whitespace
       - id: check-yaml
       - id: check-added-large-files
-  - repo: https://github.com/PyCQA/flake8
-    rev: 51f076398e617996de201321122034aa6f33f68e
-    hooks:
-      - id: flake8
-        args: ["--ignore=E402"]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: 4c8a8c7
     hooks:
       - id: mypy
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.8.1
+  hooks:
+    # Run the linter.
+    - id: ruff
+      args: [ --fix ]
+    # Run the formatter.
+    - id: ruff-format
