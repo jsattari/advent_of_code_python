@@ -15,37 +15,12 @@ sys.path.append(str(curr_path))
 from utility.helpers import file_finder
 
 
-def check_order(arr: List[int]) -> bool:
-    # flags for asc or desc
-    asc = desc = True
+def check_safety(arr: List[int]) -> bool:
+    # create array of differences between each element in a list
+    asc = {arr[i + 1] - arr[i] for i in range(len(arr) - 1)}
 
-    for i in range(1, len(arr)):
-        # check if asc or desc
-        if arr[i] <= arr[i - 1]:
-            asc = False
-
-        if arr[i] >= arr[i - 1]:
-            desc = False
-
-    return asc or desc
-
-
-def check_increments(arr: List[int], dampener=False) -> bool:
-    # allowances
-    dampened = 0
-
-    for i in range(1, len(arr)):
-        diff = abs(arr[i] - arr[i - 1])
-
-        if diff < 1 or diff > 3:
-            if dampener:
-                dampened += 1
-                if dampened > 1:
-                    return False
-                continue
-            return False
-
-    return True
+    # check if values within diff array fit within sets
+    return asc <= {1, 2, 3} or asc <= {-1, -2, -3}
 
 
 def part_one(dataset: str) -> int:
@@ -55,13 +30,11 @@ def part_one(dataset: str) -> int:
         # turn line into list
         curr = list(map(lambda x: int(x), line.split()))
 
-        # check row of nums for validity
-        asc_or_desc = check_order(curr)
-        is_valid_diff = check_increments(curr)
+        # check validity
+        valid = check_safety(curr)
 
-        # if both conditions, increment safe reports
-        if asc_or_desc and is_valid_diff:
-            safe_reports += 1
+        # increment output
+        safe_reports += valid
 
     return safe_reports
 
@@ -71,15 +44,23 @@ def part_two(dataset: str) -> int:
 
     for line in dataset.split("\n"):
         # create list form line
-        curr = list(map(lambda x: int(x), line.split()))
+        curr = list(map(int, line.split()))
 
-        # check row of nums for validity
-        asc_or_desc = check_order(curr)
-        is_valid_diff = check_increments(curr, dampener=True)
+        # safety flags
+        flags = []
 
-        # if both conditions, increment safe reports
-        if asc_or_desc and is_valid_diff:
-            safe_reports += 1
+        for i in range(len(curr)):
+            # create new list with ele removed
+            new_curr = curr[:i] + curr[i + 1 :]
+
+            # check validity
+            valid = check_safety(new_curr)
+
+            # append bool result to list
+            flags.append(valid)
+
+        # if any ele are True, then add 1 else add 0
+        safe_reports += any(flags)
 
     return safe_reports
 
