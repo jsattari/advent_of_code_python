@@ -37,6 +37,52 @@ def part_one(dataset: str) -> int:
     return total
 
 
+def part_two(dataset: str) -> int:
+    """Sliding window and regexp combo"""
+
+    # create list to hold values
+    temp = []
+
+    # set up sliding window variables
+    left = 0
+    right = 9
+
+    # flag to switch based on do/don't
+    check = True
+
+    while right <= len(dataset):
+        # slice string
+        curr = dataset[left:right]
+
+        # add conditions for do/don't
+        if "don't()" in curr:
+            check = False
+            left = right
+        elif "do()" in curr:
+            check = True
+            left = right
+        else:
+            # check if string contains pattern
+            parsed = get_nums_regexp(curr)
+
+            # if don't hasn't been reached, parse
+            if check and len(parsed) > 0:
+                temp.append(parsed[0])
+                left = right
+
+        # always increment right bookend
+        right += 1
+
+    # output
+    total = 0
+
+    # loop and multiply
+    for tup in temp:
+        total += int(tup[0]) * int(tup[1])
+
+    return total
+
+
 if __name__ == "__main__":
     # current file path
     curr_file = Path(__file__)
@@ -46,3 +92,4 @@ if __name__ == "__main__":
         data = file.read()
 
     print(f"Part one: {part_one(data)}")
+    print(f"Part two: {part_two(data)}")
