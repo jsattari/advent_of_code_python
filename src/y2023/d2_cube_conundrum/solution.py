@@ -1,26 +1,25 @@
-#!/usr/bin/env python3
-# -*- coding:utf-8 -*-
+# ruff: noqa: E402
+# mypy: disable-error-code="union-attr"
 
+from pathlib import Path
 from typing import List, Dict
 import re
 
 import sys
-sys.path.append('.')
 
-from src.utility.helpers import file_finder
+# adding sys path for imports
+curr_path = Path(__file__).parents[3]
+sys.path.append(str(curr_path))
+
+from utility.helpers import file_finder
 
 
 def part1(dataset: str) -> int:
-
-    CUBES = {
-        "red": 12,
-        "green": 13,
-        "blue": 14
-    }
+    CUBES = {"red": 12, "green": 13, "blue": 14}
 
     # pattern
-    pattern = r'(\d+)\s*(red|blue|green)'
-    game_pattern = r'(\d+)'
+    pattern = r"(\d+)\s*(red|blue|green)"
+    game_pattern = r"(\d+)"
 
     total: List[int] = []
 
@@ -46,20 +45,15 @@ def part1(dataset: str) -> int:
 
 
 def part2(dataset: str) -> int:
-
     # pattern
-    pattern = r'(\d+)\s*(red|blue|green)'
+    pattern = r"(\d+)\s*(red|blue|green)"
 
     total: int = 0
 
     for line in dataset.split("\n"):
         parts = line.split(";")
 
-        CUBES: Dict[str, List[int]] = {
-            "red": [],
-            "green": [],
-            "blue": []
-        }
+        CUBES: Dict[str, List[int]] = {"red": [], "green": [], "blue": []}
 
         # parse colors, then add value to CUBES
         for part in parts:
@@ -75,7 +69,12 @@ def part2(dataset: str) -> int:
 
 
 if __name__ == "__main__":
-    data = open(file_finder()).read()
+    # current file path
+    curr_file = Path(__file__)
+
+    # open test data file
+    with file_finder(curr_file).open("r") as file:
+        data = file.read()
 
     # print(part1(data))
     print(part2(data))
