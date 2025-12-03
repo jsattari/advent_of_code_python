@@ -39,6 +39,6 @@ def list_maker(file_str: str) -> list[str]:
         raise ValueError("String cannot be none or empty.")
 
     # split on newline
-    split_str = file_str.split("/n")
+    split_str = file_str.split("\n")
 
     return [str(i) for i in split_str]
