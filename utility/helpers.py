@@ -35,6 +35,8 @@ def list_maker(file_str: str) -> list[str]:
     Returns:
         List containing parsed string values.
     """
+    if not file_str:
+        raise ValueError("String cannot be none or empty.")
 
     # split on newline
     split_str = file_str.split("/n")
