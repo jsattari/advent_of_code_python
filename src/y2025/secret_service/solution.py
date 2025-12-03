@@ -49,7 +49,7 @@ def part_two_solution(data: str) -> int:
         direction, amt = val[0], int(val[1:])
 
         # increment by 1
-        for i in range(amt):
+        for _ in range(amt):
             if direction == "L":
                 curr = (curr - 1) % 100
             else:
