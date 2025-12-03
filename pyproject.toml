@@ -1,15 +1,18 @@
-[tool.poetry]
+[project]
 name = "advent_of_code_python"
 version = "0.1.0"
 description = ""
-authors = ["jsattari <jsattari3@gmail.com>"]
+authors = [
+    {name = "jsattari", email = "jsattari3@gmail.com"}
+]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-pre-commit = "^4.0.1"
-
+requires-python = ">=3.11"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.0",
+]
