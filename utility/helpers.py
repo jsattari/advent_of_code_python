@@ -24,3 +24,19 @@ def file_finder(file_path_obj: Path) -> Union[Path, None, Exception]:
         return input_file_path
     else:
         raise FileNotFoundError("input.txt file not found")
+
+
+def list_maker(file_str: str) -> list[str]:
+    """Accepts string from file and converts to list.
+
+    Args:
+        file_str:       String from file, may contain newline and other non-alphanum chars.
+
+    Returns:
+        List containing parsed string values.
+    """
+
+    # split on newline
+    split_str = file_str.split("/n")
+
+    return [str(i) for i in split_str]
