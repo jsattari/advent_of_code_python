@@ -26,7 +26,7 @@ def file_finder(file_path_obj: Path) -> Union[Path, None, Exception]:
         raise FileNotFoundError("input.txt file not found")
 
 
-def list_maker(file_str: str) -> list[str]:
+def list_maker(file_str: str, char: str | None) -> list[str]:
     """Accepts string from file and converts to list.
 
     Args:
@@ -35,10 +35,12 @@ def list_maker(file_str: str) -> list[str]:
     Returns:
         List containing parsed string values.
     """
+    if not char:
+        char = "\n"
     if not file_str:
         raise ValueError("String cannot be none or empty.")
 
     # split on newline
-    split_str = file_str.strip().split("\n")
+    split_str = file_str.strip().split(char)
 
     return [str(i) for i in split_str]
