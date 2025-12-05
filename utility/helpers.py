@@ -1,7 +1,7 @@
 """Function to load inputs from current folder."""
 
 from pathlib import Path
-from typing import Union
+from typing import Union, Optional
 
 
 def file_finder(file_path_obj: Path) -> Union[Path, None, Exception]:
@@ -26,7 +26,7 @@ def file_finder(file_path_obj: Path) -> Union[Path, None, Exception]:
         raise FileNotFoundError("input.txt file not found")
 
 
-def list_maker(file_str: str, char: str | None) -> list[str]:
+def list_maker(file_str: str, char: Optional[str] = None) -> list[str]:
     """Accepts string from file and converts to list.
 
     Args:
