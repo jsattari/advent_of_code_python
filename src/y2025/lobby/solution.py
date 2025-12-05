@@ -14,33 +14,30 @@ sys.path.append(str(curr_path))
 from utility.helpers import file_finder, list_maker
 
 
-def part_one(data: str) -> list:
+def part_one(data: str) -> int:
     """Solution for part 1."""
     # parsed data
     split_data = list_maker(data)
 
     jolts: list[int] = []
 
-    for bank in split_data[:1]:
+    for bank in split_data:
         # init variables for first two digits
-        x, y = 0, 1
+        x, y = 0, 0
 
-        # current max value
-        max_val = int(bank[x])
+        for i in bank:
+            num = int(i)
 
-        while y < len(bank):
-            print(x, y, max_val)
-            if bank[y] > bank[x]:
+            if y > x:
                 x = y
-                y += 1
+                y = num
 
-                max_val = max(max_val, int(f"{bank[x]}{bank[y]}"))
+            if num > y and num != x:
+                y = num
 
-            y += 1
+        jolts.append(int(f"{x}{y}"))
 
-        jolts.append(max_val)
-
-    return jolts
+    return sum(jolts)
 
 
 if __name__ == "__main__":
