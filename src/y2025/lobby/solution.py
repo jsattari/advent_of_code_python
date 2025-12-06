@@ -28,11 +28,13 @@ def part_one(data: str) -> int:
         for i in bank:
             num = int(i)
 
+            # if second max > max, then replace
             if y > x:
                 x = y
                 y = num
 
-            if num > y and num != x:
+            # replace second max with highest number available
+            if num > y:
                 y = num
 
         jolts.append(int(f"{x}{y}"))
