@@ -42,6 +42,36 @@ def part_one(data: str) -> int:
     return sum(jolts)
 
 
+def part_two(data: str) -> int:
+    """Solution for part 1."""
+    # parsed data
+    split_data = list_maker(data)
+
+    jolts: list[int] = []
+
+    for bank in split_data:
+        max_val = ""
+        curr_idx = 0
+
+        # loop backwards
+        for i in range(12, 0, -1):
+            # find current range from battery banks
+            a = bank[curr_idx : len(bank) - i + 1]
+
+            # get max from current range
+            curr_max = max(a)
+
+            # append max value of current range to overall max val str
+            max_val += str(curr_max)
+
+            # update current idx to idx of current max val
+            curr_idx += a.index(curr_max) + 1
+
+        jolts.append(int(max_val))
+
+    return sum(jolts)
+
+
 if __name__ == "__main__":
     # current file path
     curr_file = Path(__file__)
@@ -50,4 +80,5 @@ if __name__ == "__main__":
     with file_finder(curr_file).open("r") as file:
         data = file.read()
 
-    print(f"Part one: {part_one(data)}")
+    # print(f"Part one: {part_one(data)}")
+    print(f"Part two: {part_two(data)}")
