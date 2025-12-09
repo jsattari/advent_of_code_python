@@ -66,6 +66,39 @@ def part_one(data: str) -> int:
     return len(count)
 
 
+def part_two(data: str) -> int:
+    """Solution for part 2."""
+    # parsed data
+    split_data = list_maker(data)
+
+    # parse inputs
+    freshness, _ = parse_freshness_and_ids(split_data)
+
+    # sort freshness ranges
+    sorted_fresh = sorted(freshness)
+
+    # establish low and high max vals
+    curr_lo, curr_hi = sorted_fresh[0]
+
+    # total fresh ids
+    total = 0
+
+    # loop over remaining id ranges
+    for pair in sorted_fresh[1:]:
+        # if current ranges low is less than current hi value, replace with max of the two highs
+        if pair[0] <= curr_hi:
+            curr_hi = max(curr_hi, pair[1])
+
+        else:
+            # increment total plus one
+            total += curr_hi - curr_lo + 1
+
+            # replace lows and hi
+            curr_lo, curr_hi = pair
+
+    return total + (curr_hi - curr_lo) + 1
+
+
 if __name__ == "__main__":
     # current file path
     curr_file = Path(__file__)
@@ -74,4 +107,5 @@ if __name__ == "__main__":
     with file_finder(curr_file).open("r") as file:
         data = file.read()
 
-    print(f"Part one: {part_one(data)}")
+    # print(f"Part one: {part_one(data)}")
+    print(f"Part two: {part_two(data)}")
