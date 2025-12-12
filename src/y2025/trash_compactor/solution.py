@@ -6,6 +6,8 @@
 from pathlib import Path
 
 import sys
+from functools import reduce
+import operator
 
 # adding sys path for imports
 curr_path = Path(__file__).parents[3]
@@ -14,12 +16,28 @@ sys.path.append(str(curr_path))
 from utility.helpers import file_finder, list_maker
 
 
-def part_one(data: str) -> list[str]:
+def part_one(data: str) -> int:
     """Solution for part 1."""
     # parsed data
     split_data = list_maker(data)
 
-    return split_data
+    # split based on spaces
+    transformed = [i.split() for i in split_data]
+
+    # zip all rows together so the value line up "vertically"
+    transposed = list(zip(*transformed))
+
+    total = 0
+
+    for vals in transposed:
+        # parse based on sum or multiplication
+        if vals[-1] == "*":
+            temp = reduce(operator.mul, map(int, vals[:-1]), 1)
+        if vals[-1] == "+":
+            temp = sum(map(int, vals[:-1]))
+        total += temp
+
+    return total
 
 
 if __name__ == "__main__":
