@@ -40,6 +40,20 @@ def part_one(data: str) -> int:
     return total
 
 
+def part_two(data: str) -> int:
+    """Solution for part 2."""
+    # parsed data
+    split_data = list_maker(data)
+
+    # split based on spaces
+    transformed = [i.split() for i in split_data]
+    print(transformed)
+
+    total = 0
+
+    return total
+
+
 if __name__ == "__main__":
     # current file path
     curr_file = Path(__file__)
@@ -48,4 +62,6 @@ if __name__ == "__main__":
     with file_finder(curr_file).open("r") as file:
         data = file.read()
 
-    print(f"Part one: {part_one(data)}")
+    # print(f"Part one: {part_one(data)}")
+
+    print(f"Part two: {part_two(data)}")
